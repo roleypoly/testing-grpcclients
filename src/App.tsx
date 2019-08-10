@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { DiscordClient, Empty, Guild } from '@roleypoly/rpc/discord'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const discord = new DiscordClient("https://localhost:6777")
+
+interface AppState {
+  guilds: Guild[]
 }
 
-export default App;
+export default class App extends React.Component<{}, AppState> {
+  state = {
+    guilds: []
+  }
+
+  async componentDidMount () {
+    const servers = await discord.listServers(new Empty())
+    this.setState({
+      guilds: servers.getGuildsList(),
+      // guilds: servers.guilds
+    })
+  }
+
+  render () {
+    return <div>
+      { this.state.guilds.map((guild: Guild, i) => <p key={i}>{guild.getName()} - {guild.getMembercount()} members</p>) }
+    </div>
+  }
+}
