@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/roleypoly/rpc/discord"
+	empty "github.com/golang/protobuf/ptypes/empty"
+	discord "github.com/roleypoly/rpc/discord"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -19,7 +20,7 @@ func main() {
 
 	dd := discord.NewDiscordClient(grpcClient)
 
-	guildList, err := dd.ListServers(context.Background(), &discord.Empty{})
+	guildList, err := dd.ListGuilds(context.Background(), &empty.Empty{})
 	if err != nil {
 		log.Fatalln(err)
 	}
