@@ -16,7 +16,7 @@
     "typescript": "3.5.3"
   },
   "devDependencies": {
-    "@types/google-protobuf": "^3.7.1"
+    "@types/google-protobuf": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",
